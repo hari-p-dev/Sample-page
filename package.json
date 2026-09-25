@@ -1,0 +1,34 @@
+{
+  "name": "sample-page",
+  "version": "1.0.0",
+  "description": "Full-stack sample webpage using React (Vite) + Node.js (Express) with ESLint, Prettier, Husky, and PR-Agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
+    "format": "npm --prefix backend run format && npm --prefix frontend run format",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev"
+  },
+  "lint-staged": {
+    "backend/**/*.js": [
+      "prettier --write --config backend/.prettierrc.json",
+      "npm --prefix backend exec -- eslint --fix --config backend/eslint.config.js"
+    ],
+    "frontend/**/*.{js,jsx}": [
+      "prettier --write --config frontend/.prettierrc.json",
+      "npm --prefix frontend exec -- eslint --fix --config frontend/eslint.config.js"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3"
+  },
+  "license": "MIT"
+}

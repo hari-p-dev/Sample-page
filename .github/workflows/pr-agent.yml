@@ -1,0 +1,43 @@
+name: PR-Agent
+
+# PR-Agent (https://github.com/The-PR-Agent/pr-agent)
+# The Original Open-Source PR Reviewer. Automatically reviews, describes,
+# and suggests improvements on pull requests using an LLM.
+# Docs: https://github.com/The-PR-Agent/pr-agent/blob/main/docs/docs/installation/github.md
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  pr_agent_job:
+    # Skip runs triggered by bots to avoid feedback loops.
+    if: ${{ github.event.sender.type != 'Bot' }}
+    runs-on: ubuntu-latest
+    name: Run PR-Agent on pull requests and respond to comments
+    steps:
+      - name: PR Agent action step
+        id: pragent
+        uses: the-pr-agent/pr-agent@main
+        env:
+          # GITHUB_TOKEN is provided automatically by GitHub Actions.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Provide your model provider key as a repository secret.
+          # Settings > Secrets and variables > Actions > New repository secret
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          # Which tools run automatically on each PR event:
+          github_action_config.auto_review: "true"
+          github_action_config.auto_describe: "true"
+          github_action_config.auto_improve: "true"
+          # --- To use Anthropic Claude instead of OpenAI, remove OPENAI_KEY above
+          #     and uncomment the following (set ANTHROPIC_KEY as a secret):
+          # config.model: 'anthropic/claude-opus-5'
+          # config.fallback_models: '["anthropic/claude-haiku-4-5-20251001"]'
+          # ANTHROPIC.KEY: ${{ secrets.ANTHROPIC_KEY }}

@@ -1,0 +1,30 @@
+# PR-Agent configuration
+# Reference: https://github.com/The-PR-Agent/pr-agent
+# This file overrides the default configuration.toml when PR-Agent runs.
+
+[config]
+# LLM model used for reviews. Must match the provider key set in the workflow.
+model = "gpt-4o"
+fallback_models = ["gpt-4o-mini"]
+publish_output = true
+
+[pr_reviewer]
+require_tests_review = true
+require_security_review = true
+num_code_suggestions = 4
+persistent_comment = true
+extra_instructions = "Focus on React hooks correctness, Express error handling, and ESLint/Prettier consistency."
+
+[pr_description]
+publish_labels = true
+add_original_user_description = true
+generate_ai_title = false
+
+[pr_code_suggestions]
+num_code_suggestions_per_chunk = 4
+suggestions_score_threshold = 5
+
+[github_action_config]
+auto_review = true
+auto_describe = true
+auto_improve = true
