@@ -10,14 +10,21 @@ A sample full-stack web application built with **React (Vite)** on the frontend 
 ```
 Sample page/
 ├── backend/                 # Node.js + Express API
-│   ├── src/server.js        # Express server (/api/health, /api/message)
+│   ├── src/server.js        # Express API (health, message, products, contact)
 │   ├── eslint.config.js
 │   ├── .prettierrc.json
 │   └── package.json
-├── frontend/                # React (Vite) app
+├── frontend/                # React (Vite) app — multi-page with React Router
 │   ├── src/
-│   │   ├── App.jsx          # Fetches and displays the backend message
-│   │   ├── main.jsx
+│   │   ├── components/
+│   │   │   └── Layout.jsx   # Shared nav bar + footer (router outlet)
+│   │   ├── pages/
+│   │   │   ├── Home.jsx     # Hero + live message from the API
+│   │   │   ├── About.jsx    # Static info page
+│   │   │   ├── Products.jsx # Catalog fetched from /api/products
+│   │   │   ├── Contact.jsx  # Form that POSTs to /api/contact
+│   │   │   └── NotFound.jsx # 404 page
+│   │   ├── main.jsx         # Router setup + app entry
 │   │   └── index.css
 │   ├── index.html
 │   ├── vite.config.js       # Dev proxy: /api -> http://localhost:3001
@@ -64,8 +71,16 @@ In a second terminal, start the frontend (port 5173):
 npm run dev:frontend
 ```
 
-Open http://localhost:5173. The React app calls `/api/message`, which Vite proxies to
-the Express backend, and displays the returned message.
+Open http://localhost:5173. The app has four pages — **Home**, **About**,
+**Products**, and **Contact** — navigable via the top nav bar. Vite proxies all
+`/api/*` requests to the Express backend.
+
+### API endpoints
+
+- `GET /api/health` — health check
+- `GET /api/message` — sample message shown on the Home page
+- `GET /api/products` — product catalog shown on the Products page
+- `POST /api/contact` — receives `{ name, email, message }` from the Contact form
 
 ## Linting & formatting
 
