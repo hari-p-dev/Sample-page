@@ -9,6 +9,17 @@
   --border: #e5e7eb;
 }
 
+/* Dark theme overrides applied via <html data-theme="dark"> */
+[data-theme='dark'] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --border: #334155;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -17,6 +28,9 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .app {
@@ -69,6 +83,32 @@ body {
 .nav-link.active {
   color: var(--primary);
   border-bottom-color: var(--primary);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* Content */
