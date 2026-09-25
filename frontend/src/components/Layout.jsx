@@ -40,7 +40,8 @@ function Layout() {
 
       <footer className="footer">
         <p>
-          Built with React (Vite) + Node.js (Express) &middot; Sample project
+          &copy; {new Date().getFullYear()} Built with React (Vite) + Node.js
+          (Express) &middot; Sample project
         </p>
       </footer>
     </div>
